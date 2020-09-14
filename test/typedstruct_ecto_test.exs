@@ -1,6 +1,6 @@
-defmodule TypedstructEctoChangesetTest do
+defmodule TypedStructEctoChangesetTest do
   use ExUnit.Case
-  doctest TypedstructEctoChangeset
+  doctest TypedStructEctoChangeset
 
   defmodule Struct do
     @type t() :: %__MODULE__{}
@@ -12,15 +12,15 @@ defmodule TypedstructEctoChangesetTest do
     use TypedStruct
 
     typedstruct do
-      plugin(TypedstructEctoChangeset)
+      plugin(TypedStructEctoChangeset)
 
       field(:integer1, integer())
       field(:integer2, :integer)
       field(:binary, binary())
       field(:string1, :string)
       field(:string2, String.t())
-      field(:struct1, %TypedstructEctoChangesetTest.Struct{})
-      field(:struct2, TypedstructEctoChangesetTest.Struct.t())
+      field(:struct1, %TypedStructEctoChangesetTest.Struct{})
+      field(:struct2, TypedStructEctoChangesetTest.Struct.t())
     end
   end
 
@@ -45,17 +45,17 @@ defmodule TypedstructEctoChangesetTest do
   end
 
   test "struct using %{} format" do
-    assert Map.get(Sample.__changeset__(), :struct1) == TypedstructEctoChangesetTest.Struct
+    assert Map.get(Sample.__changeset__(), :struct1) == TypedStructEctoChangesetTest.Struct
   end
 
   test "struct using .t() format" do
-    assert Map.get(Sample.__changeset__(), :struct2) == TypedstructEctoChangesetTest.Struct
+    assert Map.get(Sample.__changeset__(), :struct2) == TypedStructEctoChangesetTest.Struct
   end
 
   test "cast with ecto" do
     changeset =
       Ecto.Changeset.cast(
-        %TypedstructEctoChangesetTest.Sample{},
+        %TypedStructEctoChangesetTest.Sample{},
         %{"integer1" => 3, "string2" => "Hello world"},
         [:integer1, :string2]
       )

@@ -1,6 +1,8 @@
-# TypedstructEctoChangeset
+# TypedStructEctoChangeset
 
-**TODO: Add description**
+TypedStruct plugin to integrate ecto changeset, allow
+to use typedstrcut module like ecto schema module when casting
+changeset, embeds and assoc are not yet supported
 
 ## Installation
 

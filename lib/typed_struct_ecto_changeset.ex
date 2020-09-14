@@ -1,4 +1,4 @@
-defmodule TypedstructEctoChangeset do
+defmodule TypedStructEctoChangeset do
   @moduledoc """
   TypedStruct plugin to integrate ecto changeset, allow
   to use typedstrcut module like ecto schema module when casting

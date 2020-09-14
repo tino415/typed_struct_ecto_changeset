@@ -1,4 +1,4 @@
-defmodule TypedstructEctoChangeset.MixProject do
+defmodule TypedStructEctoChangeset.MixProject do
   use Mix.Project
 
   def project do
