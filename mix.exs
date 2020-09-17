@@ -10,6 +10,8 @@ defmodule TypedStructEctoChangeset.MixProject do
       elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      description: description(),
+      package: package(),
       docs: [
         extras: ["README.md"]
       ]
@@ -20,6 +22,17 @@ defmodule TypedStructEctoChangeset.MixProject do
   def application do
     [
       extra_applications: [:logger]
+    ]
+  end
+
+  defp description() do
+    "Plugin for typed struct to integrate with changeset"
+  end
+
+  defp package() do
+    [
+      licenses: ["MIT"],
+      links: %{"Github" => "https://github.com/tino415/typed_struct_ecto_changeset"}
     ]
   end
 
