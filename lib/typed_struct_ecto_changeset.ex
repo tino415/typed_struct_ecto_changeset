@@ -7,6 +7,26 @@ defmodule TypedStructEctoChangeset do
 
   Module worsk by generating __changeset__ that returns field types
   and is used by `Ecto.Changeset.cast` to cast types
+
+  ## Examples
+
+  if module exists:
+  ```
+  defmodule TypedStructModule do
+    use TypedStruct
+
+    typedstruct do
+      plugin TypedStructEctoChangeset
+
+      field :age, integer()
+      field :name, String.t()
+    end
+  end
+  ```
+  Then we can:
+
+      iex> Ecto.Changeset.cast(%TypedStructModule{}, %{"age" => 23, "name" => "John Doe"}, [:age, :name])
+      %Ecto.Changeset{}
   """
   use TypedStruct.Plugin
 

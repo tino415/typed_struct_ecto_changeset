@@ -1,6 +1,5 @@
 defmodule TypedStructEctoChangesetTest do
   use ExUnit.Case
-  doctest TypedStructEctoChangeset
 
   defmodule Struct do
     @moduledoc false
