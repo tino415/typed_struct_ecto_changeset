@@ -2,7 +2,11 @@ defmodule TypedStructEctoChangeset do
   @moduledoc """
   TypedStruct plugin to integrate ecto changeset, allow
   to use typedstrcut module like ecto schema module when casting
-  changeset, embeds and assoc are not yet supported
+  changeset, embeds and assoc are not yet supported, but you can use
+  `Ecto.Type` implementation instead
+
+  Module worsk by generating __changeset__ that returns field types
+  and is used by `Ecto.Changeset.cast` to cast types
   """
   use TypedStruct.Plugin
 

@@ -3,24 +3,28 @@ defmodule TypedStructEctoChangesetTest do
   doctest TypedStructEctoChangeset
 
   defmodule Struct do
+    @moduledoc false
+
     @type t() :: %__MODULE__{}
 
     defstruct [:password, :login]
   end
 
   defmodule Sample do
+    @moduledoc false
+
     use TypedStruct
 
     typedstruct do
-      plugin(TypedStructEctoChangeset)
+      plugin TypedStructEctoChangeset
 
-      field(:integer1, integer())
-      field(:integer2, :integer)
-      field(:binary, binary())
-      field(:string1, :string)
-      field(:string2, String.t())
-      field(:struct1, %TypedStructEctoChangesetTest.Struct{})
-      field(:struct2, TypedStructEctoChangesetTest.Struct.t())
+      field :integer1, integer()
+      field :integer2, :integer
+      field :binary, binary()
+      field :string1, :string
+      field :string2, String.t()
+      field :struct1, %TypedStructEctoChangesetTest.Struct{}
+      field :struct2, TypedStructEctoChangesetTest.Struct.t()
     end
   end
 
