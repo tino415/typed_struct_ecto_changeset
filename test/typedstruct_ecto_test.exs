@@ -22,8 +22,33 @@ defmodule TypedStructEctoChangesetTest do
       field :binary, binary()
       field :string1, :string
       field :string2, String.t()
+      field :decimal1, Decimal.t()
+      field :date1, Date.t()
+      field :time1, Time.t()
+      field :datetime1, DateTime.t()
+      field :datetime2, NaiveDateTime.t()
+      field :any1, any()
+      field :term1, term()
+      field :list1, [integer()]
+      field :list2, [String.t()]
+      field :list3, [any()]
+      field :list4, [term()]
       field :struct1, %TypedStructEctoChangesetTest.Struct{}
       field :struct2, TypedStructEctoChangesetTest.Struct.t()
+    end
+  end
+
+  defmodule SampleUsec do
+    @moduledoc false
+
+    use TypedStruct
+
+    typedstruct do
+      plugin TypedStructEctoChangeset, usec_times: true
+
+      field :time1, Time.t()
+      field :datetime1, DateTime.t()
+      field :datetime2, NaiveDateTime.t()
     end
   end
 
@@ -47,12 +72,68 @@ defmodule TypedStructEctoChangesetTest do
     assert Map.get(Sample.__changeset__(), :string2) == :string
   end
 
+  test "Decimal.t() format" do
+    assert Map.get(Sample.__changeset__(), :decimal1) == :decimal
+  end
+
+  test "Date.t() format" do
+    assert Map.get(Sample.__changeset__(), :date1) == :date
+  end
+
+  test "Time.t() format" do
+    assert Map.get(Sample.__changeset__(), :time1) == :time
+  end
+
+  test "DateTime.t() format" do
+    assert Map.get(Sample.__changeset__(), :datetime1) == :datetime
+  end
+
+  test "NaiveDateTime.t() format" do
+    assert Map.get(Sample.__changeset__(), :datetime2) == :naive_datetime
+  end
+
+  test "any() format is a :map" do
+    assert Map.get(Sample.__changeset__(), :any1) == :map
+  end
+
+  test "term() format is a :map" do
+    assert Map.get(Sample.__changeset__(), :term1) == :map
+  end
+
+  test "[integer()] format is an {:array, :integer}" do
+    assert Map.get(Sample.__changeset__(), :list1) == {:array, :integer}
+  end
+
+  test "[String.t()] format is an {:array, :string}" do
+    assert Map.get(Sample.__changeset__(), :list2) == {:array, :string}
+  end
+
+  test "[any()] format is an {:array, :map}" do
+    assert Map.get(Sample.__changeset__(), :list3) == {:array, :map}
+  end
+
+  test "[term()] format is an {:array, :map}" do
+    assert Map.get(Sample.__changeset__(), :list4) == {:array, :map}
+  end
+
   test "struct using %{} format" do
     assert Map.get(Sample.__changeset__(), :struct1) == TypedStructEctoChangesetTest.Struct
   end
 
   test "struct using .t() format" do
     assert Map.get(Sample.__changeset__(), :struct2) == TypedStructEctoChangesetTest.Struct
+  end
+
+  test "Time.t() format with usec option" do
+    assert Map.get(SampleUsec.__changeset__(), :time1) == :time_usec
+  end
+
+  test "DateTime.t() format with usec option" do
+    assert Map.get(SampleUsec.__changeset__(), :datetime1) == :datetime_usec
+  end
+
+  test "NaiveDateTime.t() format with usec option" do
+    assert Map.get(SampleUsec.__changeset__(), :datetime2) == :naive_datetime_usec
   end
 
   test "cast with ecto" do
