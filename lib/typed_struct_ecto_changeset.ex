@@ -1,16 +1,19 @@
 defmodule TypedStructEctoChangeset do
   @moduledoc """
-  TypedStruct plugin to integrate ecto changeset, allow
-  to use typedstrcut module like ecto schema module when casting
-  changeset, embeds and assoc are not yet supported, but you can use
+  A TypedStruct plugin to integrate ecto changeset, that lets you
+  use a typedstruct module as an Ecto schema module when casting
+  changesets.
+
+  Embeds and assoc are not yet supported, but you can use
   `Ecto.Type` implementation instead
 
-  Module worsk by generating __changeset__ that returns field types
-  and is used by `Ecto.Changeset.cast` to cast types
+  The plugin works by generating a `__changeset__/0` function
+  in the invoking module, which is called by `Ecto.Changeset.cast/3`
+  to cast types.
 
   ## Examples
 
-  if module exists:
+  If this module is defined:
   ```
   defmodule TypedStructModule do
     use TypedStruct
@@ -28,6 +31,7 @@ defmodule TypedStructEctoChangeset do
       iex> Ecto.Changeset.cast(%TypedStructModule{}, %{"age" => 23, "name" => "John Doe"}, [:age, :name])
       %Ecto.Changeset{}
 
+  ## Notes
 
   Supports as many Ecto types as possible including `:decimal`, `:date`,
   `:time`, `:datetime`, from their corresponding typespecs `Decimal.t()`, etc.
@@ -39,6 +43,20 @@ defmodule TypedStructEctoChangeset do
   `true`, then `Time.t()`, `DateTime.t()` and `NaiveDateTime.t()` fields
   will produce the Ecto types `:time_usec`, `:datetime_usec` and
   `naive_datetime_usec`.
+
+  For example:
+  ```
+  defmodule TypedStructModule do
+    use TypedStruct
+
+    typedstruct do
+      plugin TypedStructEctoChangeset, usec_times: true
+
+      field :time_with_usec, Time.t()
+      field :updated_at_with_usec, NaiveDateTime.t()
+    end
+  end
+  ```
   """
   use TypedStruct.Plugin
 
