@@ -102,6 +102,7 @@ defmodule TypedStructEctoChangeset do
   defp build_in_aliases({:__aliases__, _, [:String]}, _opts), do: :string
   defp build_in_aliases({:__aliases__, _, [:Decimal]}, _opts), do: :decimal
   defp build_in_aliases({:__aliases__, _, [:Date]}, _opts), do: :date
+
   defp build_in_aliases({:__aliases__, _, [:Time]}, opts) do
     if Keyword.get(opts, :usec_times, false) do
       :time_usec
@@ -109,6 +110,7 @@ defmodule TypedStructEctoChangeset do
       :time
     end
   end
+
   defp build_in_aliases({:__aliases__, _, [:DateTime]}, opts) do
     if Keyword.get(opts, :usec_times, false) do
       :datetime_usec
@@ -116,6 +118,7 @@ defmodule TypedStructEctoChangeset do
       :datetime
     end
   end
+
   defp build_in_aliases({:__aliases__, _, [:NaiveDateTime]}, opts) do
     if Keyword.get(opts, :usec_times, false) do
       :naive_datetime_usec
@@ -123,6 +126,7 @@ defmodule TypedStructEctoChangeset do
       :naive_datetime
     end
   end
+
   defp build_in_aliases({:__aliases__, _, _} = aliases, _opts), do: aliases
 
   def after_definition(_opts) do
