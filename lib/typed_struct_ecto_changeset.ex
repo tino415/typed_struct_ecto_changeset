@@ -68,7 +68,7 @@ defmodule TypedStructEctoChangeset do
     end
   end
 
-  def field(name, type, opts) do
+  def field(name, type, opts, _env) do
     quote do
       @changeset_fields {unquote(name), unquote(spec_to_type(type, opts))}
     end
