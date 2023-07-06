@@ -95,8 +95,8 @@ defmodule TypedStructEctoChangeset do
       {atom, _, []} ->
         spec_to_type(atom, opts)
 
-      {:__aliases__, _, [custom_type]} = alias when is_atom(custom_type) ->
-        alias
+      {:__aliases__, _, _path} = aliases ->
+        build_in_aliases(aliases, opts)
     end
   end
 
