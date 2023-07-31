@@ -68,7 +68,7 @@ defmodule TypedStructEctoChangeset do
     end
   end
 
-  def field(name, type, opts) do
+  def field(name, type, opts, _env) do
     quote do
       @changeset_fields {unquote(name), unquote(spec_to_type(type, opts))}
     end
@@ -94,6 +94,9 @@ defmodule TypedStructEctoChangeset do
 
       {atom, _, []} ->
         spec_to_type(atom, opts)
+
+      {:__aliases__, _, _path} = aliases ->
+        build_in_aliases(aliases, opts)
     end
   end
 
