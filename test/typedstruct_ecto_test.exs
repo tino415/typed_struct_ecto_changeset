@@ -1,6 +1,18 @@
 defmodule TypedStructEctoChangesetTest do
   use ExUnit.Case
 
+  defmodule MyApp.EctoTypeAny do
+    use Ecto.Type
+
+    def type, do: :any
+
+    def cast(value), do: {:ok, value}
+
+    def load(value), do: {:ok, value}
+
+    def dump(value), do: {:ok, value}
+  end
+
   defmodule Struct do
     @moduledoc false
 
@@ -28,6 +40,7 @@ defmodule TypedStructEctoChangesetTest do
       field :datetime1, DateTime.t()
       field :datetime2, NaiveDateTime.t()
       field :any1, any()
+      field :custom_type, MyApp.EctoTypeAny
       field :term1, term()
       field :list1, [integer()]
       field :list2, [String.t()]
@@ -94,6 +107,10 @@ defmodule TypedStructEctoChangesetTest do
 
   test "any() format is a :map" do
     assert Map.get(Sample.__changeset__(), :any1) == :map
+  end
+
+  test "custom_type format is a CustomType" do
+    assert Map.get(Sample.__changeset__(), :custom_type) == TypedStructEctoChangesetTest.MyApp.EctoTypeAny
   end
 
   test "term() format is a :map" do
