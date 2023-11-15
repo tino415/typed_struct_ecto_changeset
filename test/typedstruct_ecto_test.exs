@@ -110,7 +110,8 @@ defmodule TypedStructEctoChangesetTest do
   end
 
   test "custom_type format is a CustomType" do
-    assert Map.get(Sample.__changeset__(), :custom_type) == TypedStructEctoChangesetTest.MyApp.EctoTypeAny
+    assert Map.get(Sample.__changeset__(), :custom_type) ==
+             TypedStructEctoChangesetTest.MyApp.EctoTypeAny
   end
 
   test "term() format is a :map" do

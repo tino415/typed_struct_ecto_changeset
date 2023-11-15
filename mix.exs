@@ -14,7 +14,8 @@ defmodule TypedStructEctoChangeset.MixProject do
       package: package(),
       docs: [
         extras: ["README.md"]
-      ]
+      ],
+      aliases: aliases()
     ]
   end
 
@@ -43,6 +44,17 @@ defmodule TypedStructEctoChangeset.MixProject do
       {:ecto, "~> 3.10", only: [:test]},
       {:ex_doc, "~> 0.29", only: [:dev], runtime: false},
       {:typed_struct, "~> 0.3.0", only: [:dev], runtime: false}
+    ]
+  end
+
+  defp aliases do
+    [
+      "dev.checks": [
+        "format",
+        "compile --warnings-as-errors --all-warnings",
+        "credo --strict",
+        "dialyzer"
+      ]
     ]
   end
 end
