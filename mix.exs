@@ -6,7 +6,7 @@ defmodule TypedStructEctoChangeset.MixProject do
   def project do
     [
       app: :typed_struct_ecto_changeset,
-      version: "0.3.0",
+      version: "1.0.0",
       elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -42,7 +42,7 @@ defmodule TypedStructEctoChangeset.MixProject do
       {:dialyxir, "~> 1.3", only: [:dev], runtime: false},
       {:ecto, "~> 3.10", only: [:test]},
       {:ex_doc, "~> 0.29", only: [:dev], runtime: false},
-      {:typed_struct, "~> 0.3.0"}
+      {:typed_struct, "~> 0.3.0", only: [:dev], runtime: false}
     ]
   end
 end
