@@ -31,6 +31,16 @@ Then we can:
 More database-centric fields such as [assoc](https://hexdocs.pm/ecto/Ecto.Changeset.html#cast_assoc/3) are not yet 
 supported
 
+## Example use cases of this plugin
+
+* [`typed_struct_ctor`](https://hexdocs.pm/typed_struct_ctor/TypedStructCtor.html)
+– Adds validating (`new` and `from`) constructor functions.
+> Try the macro out in real time without having to install or write any of your own code.  
+> All you need is a running instance of [Livebook](https://livebook.dev/)
+>
+> [![Run in Livebook](https://livebook.dev/badge/v1/blue.svg)](https://livebook.dev/run?url=https://github.com/withbelay/typed_struct_ctor/blob/main/try_it_out.livemd)
+
+
 ## Installation
 
 Because this plugin supports the interface defined by the `TypedStruct` macro, installation assumes you've already
