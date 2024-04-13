@@ -130,6 +130,12 @@ defmodule TypedStructEctoChangeset do
     end
   end
 
+  defp build_in_aliases({:__aliases__, _, [:Ecto, :Enum]}, opts) do
+    quote do
+      Ecto.ParameterizedType.init(Ecto.Enum, unquote(opts))
+    end
+  end
+
   defp build_in_aliases({:__aliases__, _, _} = aliases, _opts), do: aliases
 
   def after_definition(_opts) do

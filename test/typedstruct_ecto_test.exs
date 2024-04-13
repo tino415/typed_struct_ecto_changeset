@@ -48,6 +48,7 @@ defmodule TypedStructEctoChangesetTest do
       field :list4, [term()]
       field :struct1, %TypedStructEctoChangesetTest.Struct{}
       field :struct2, TypedStructEctoChangesetTest.Struct.t()
+      field :enum, Ecto.Enum, values: ~w(value1 value2 value3)a
     end
   end
 
@@ -142,6 +143,11 @@ defmodule TypedStructEctoChangesetTest do
     assert Map.get(Sample.__changeset__(), :struct2) == TypedStructEctoChangesetTest.Struct
   end
 
+  test "Ecto.Enum" do
+    assert Map.get(Sample.__changeset__(), :enum) ==
+             {:parameterized, Ecto.Enum, Ecto.Enum.init(values: ~w(value1 value2 value3)a)}
+  end
+
   test "Time.t() format with usec option" do
     assert Map.get(SampleUsec.__changeset__(), :time1) == :time_usec
   end
@@ -158,11 +164,12 @@ defmodule TypedStructEctoChangesetTest do
     changeset =
       Ecto.Changeset.cast(
         %TypedStructEctoChangesetTest.Sample{},
-        %{"integer1" => 3, "string2" => "Hello world"},
-        [:integer1, :string2]
+        %{"integer1" => 3, "string2" => "Hello world", "enum" => "value2"},
+        [:integer1, :string2, :enum]
       )
 
     assert Ecto.Changeset.get_change(changeset, :integer1) == 3
     assert Ecto.Changeset.get_change(changeset, :string2) == "Hello world"
+    assert Ecto.Changeset.get_change(changeset, :enum) == :value2
   end
 end
